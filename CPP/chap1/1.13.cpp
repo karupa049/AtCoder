@@ -2,15 +2,12 @@
 using namespace std;
 
 int main(){
-    int N;
-    cin >> N;
-    vector<int> vec(N);
-    for (int i = 0; i < N; i++){
-        cin >> vec.at(i);
+    vector<int> vec = {1, 2, 3};
+
+    vec.push_back(10);
+
+    for(int i = 0; i < vec.size(); i++){
+        cout << vec.at(i) << endl;
     }
 
-    for (int i = 0; i < N; i++){
-        cout << vec.at(i) << ",";
-    }
-    cout << endl;
 }
