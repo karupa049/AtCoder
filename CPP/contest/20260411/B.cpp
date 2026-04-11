@@ -13,7 +13,6 @@ int main(){
         i++;
     }
 
-
     //初期値どれって思ってたけど、最初の入力でT0を初期値として扱うのね
     //Tの配列の大きさは（T+1）か。
 
@@ -26,8 +25,6 @@ int main(){
 
     int lastData = temData[0];
     int nowData = 0;
-
-
     cout << 0 << " " << lastData << endl;
 
     for(int j = 1; j < temData.size(); j++){
