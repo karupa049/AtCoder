@@ -5,6 +5,5 @@ int main(){
     int N;
     cin >> N;
 
-    int result = N * N;
-    cout << result << endl;
+    
 }
