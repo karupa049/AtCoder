@@ -43,13 +43,11 @@ int main(){
             }
         }
     }
-
     /*
     for(int j = 0; j < q2.size(); j++){
         cout << q2[j] << " ";
     }
     */
-
     bool flag = false;
 
     for(int j = 0; j < q2.size(); j++){
@@ -63,7 +61,4 @@ int main(){
     }else{
         cout << "No" << endl;
     }
-
-
-
 }
