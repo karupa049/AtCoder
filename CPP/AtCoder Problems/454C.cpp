@@ -8,13 +8,6 @@ int main(){
 
     vector<vector<int>> graph(n + 1);
 
-    /*
-    1 2
-    2 3
-    3 4
-    2 4
-    5 2
-    */
    for(int i = 0; i < m; i++){
     int a, b;
     cin >> a >> b;
