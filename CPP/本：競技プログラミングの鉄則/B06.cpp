@@ -21,13 +21,26 @@ int main(){
 
     vector<int> sum(n + 1);
     int result = 0;
-    for(int i = 0; i < sum.size(); i++){
-        result = result + aa[i + 1];
-        sum[i + 1] = result;
+    for(int i = 1; i <= n; i++){
+        sum[i] = sum[i - 1] + aa[i];
     }
 
     for(int i = 0; i < sum.size(); i++) cout << sum[i] << " ";
-    cout << endl; for(int i = 0; i < sum.size(); i++) cout << "left " << left[i] << " " << "right " << right[i] << endl;
+    cout << endl; 
+    
+    for(int i = 1; i <= q; i++){
+    // 区間 [L, R] の「あたり」の数
+    int wins = sum[right[i]] - sum[left[i] - 1];
+    
+    // その区間の長さ（全回数）
+    int total = right[i] - left[i] + 1;
+    
+    // 「はずれ」の数 = 全体 - あたり
+    int loses = total - wins;
 
+    if(wins > loses) cout << "win" << endl;
+    else if(wins < loses) cout << "lose" << endl;
+    else cout << "draw" << endl;
+}
 
 }
