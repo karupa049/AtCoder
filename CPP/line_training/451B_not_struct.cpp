@@ -31,5 +31,37 @@ Yandex 30
 // 
 
 int main(){
+    int n;
+    cin >> n;
 
+    vector<string> name(n + 1);
+    vector<int> age(n + 1);
+
+    for(int i = 1; i <= n; i++) cin >> name[i] >> age[i];
+    for(int i = 1; i <= n; i++) cout << name[i] << " "; cout << endl;
+    for(int i = 1; i <= n; i++) cout << age[i] << " "; cout << endl;
+
+    for(int i = 1; i <= n; i++){
+        for(int j = i + 1; j <= n; j++){
+            if(age[j] < age[i] || (age[j] == age[i] and name[j] < name[i])){
+                int tmpa = age[i];
+                age[i] = age[j];
+                age[j] = tmpa;
+
+                string tmpn = name[i];
+                name[i] = name[j];
+                name[j] = tmpn;
+            }
+        }
+    }
+
+    for(int i = 1; i <= n; i++){
+        cout << i << " ha " << name[i] << " de " << age[i] << " desu" << endl;
+    }
+
+    //structを使わないとvectorを使いがち、、
+    //vectorを何個も宣言しないでいいからstructは便利
+    //vectorごとに対応しているデータを扱うときはstructが便利。今回で言うと、nameとageのindexが対応している
+    
+    
 }
