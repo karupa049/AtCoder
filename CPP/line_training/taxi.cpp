@@ -42,5 +42,51 @@ using namespace std;
 // 06:00-09:30     ピークタイム     520
 // それ以外         通常            400
 
+// 今の時間が深夜１、ピーク２、通常３
+int get_time_type(string time){
+    vector<string> hhmmss;
+    string tempo;
+    for(int i = 0; i < time.length(); i++){
+        if(time[i] == '.'){
+            hhmmss.push_back(tempo);
+            tempo = "";
+        }else if(time[i] == ':'){
+            hhmmss.push_back(tempo);
+            tempo = "";
+        }else{
+            tempo += time[i];
+        }
+    }
+    hhmmss.push_back(tempo);
+
+    for(int i = 0; i < hhmmss.size(); i++){
+        cout << hhmmss[i] << " ";
+    }
+    cout << endl;
+
+    int h = stoi(hhmmss[0]);
+    // h= 3600 * h;
+    int m = stoi(hhmmss[1]);
+    // m = 60 * m;
+    int s = stoi(hhmmss[2]);
+
+    // int time_second = h + m + s;
+    // cout << time_second << endl;
+
+    if(h >= 0 and h < 6){
+        return 1;
+    }else if((h >= 6 and h < 9) || (h == 9 and m < 30) || (h >= 18 and h < 24)){
+        return 2;
+    }else{
+        return 0;
+    }
+}
+
+int main(){
+    // string time = "13:00:00.245";
+    string time = "8:50:11.123";
+    cout << get_time_type(time) << endl;
+}
+
 
 
