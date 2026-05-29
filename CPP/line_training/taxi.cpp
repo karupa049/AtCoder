@@ -101,6 +101,7 @@ int get_increment_fare(string time_str){
 }
 
 int main(){
+    freopen("input.txt", "r", stdin);
 
     double dist;
     double total_dist = 0;
