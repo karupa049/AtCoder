@@ -88,6 +88,18 @@ double get_seconds(string time_str){
 
 }
 
+int get_increment_fare(string time_str){
+    int type = get_time_type(time_str);
+    double base = 40.0;
+    if(type == 1){
+        return base * 1.5;
+    }else if(type == 2){
+        return base * 1.3;
+    }else{
+        return base;
+    }
+}
+
 int main(){
 
     double dist;
@@ -112,7 +124,17 @@ int main(){
 
     while(cin >> curr_time_str >> dist){
         cout <<  "ŽžŠÔ : " << curr_time_str << "@‹——£ : "<< dist << endl;
-
+        double time_diff = get_seconds(curr_time_str) - get_seconds(prev_time_str);
+        double speed = dist / time_diff;
+        
+        if(speed <= 10.0 / 3.6){
+            //type‚É‚æ‚èA”{—¦•Ï‚í‚é
+            total_low_speed_sec += time_diff;
+            if(total_low_speed_sec >= 45){
+                total_fare += 40;
+                total_low_speed_sec -= 45;
+            }
+        }
     }
 
 
