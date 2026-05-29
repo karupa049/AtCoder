@@ -42,36 +42,28 @@ using namespace std;
 // 06:00-09:30     ƒs[ƒNƒ^ƒCƒ€     520
 // ‚»‚êˆÈŠO         ’Êí            400
 
-// ¡‚ÌŠÔ‚ª[–é‚PAƒs[ƒN‚QA’Êí‚R
-int get_time_type(string time){
-    vector<string> hhmmss;
+vector<double> parse_time(string time_str){
+    vector<double> hhmmss;
     string tempo;
-    for(int i = 0; i < time.length(); i++){
-        if(time[i] == '.'){
-            hhmmss.push_back(tempo);
-            tempo = "";
-        }else if(time[i] == ':'){
-            hhmmss.push_back(tempo);
+    for(int i = 0; i < time_str.size(); i++){
+        if(time_str[i] == '.' || time_str[i] == ':'){
+            hhmmss.push_back(stod(tempo));
             tempo = "";
         }else{
-            tempo += time[i];
+            tempo += time_str[i];
         }
     }
-    hhmmss.push_back(tempo);
+    hhmmss.push_back(stod(tempo));
+    return hhmmss;
+}
 
-    for(int i = 0; i < hhmmss.size(); i++){
-        cout << hhmmss[i] << " ";
-    }
-    cout << endl;
+// ¡‚ÌŠÔ‚ª[–é‚PAƒs[ƒN‚QA’Êí‚R
+int get_time_type(string time_str){
+    vector<double> hhmmss = parse_time(time_str);
 
-    int h = stoi(hhmmss[0]);
-    // h= 3600 * h;
-    int m = stoi(hhmmss[1]);
-    // m = 60 * m;
-    int s = stoi(hhmmss[2]);
-
-    // int time_second = h + m + s;
-    // cout << time_second << endl;
+    int h = hhmmss[0];
+    int m = hhmmss[1];
+    int s = hhmmss[2];
 
     if(h >= 0 and h < 6){
         return 1;
@@ -84,26 +76,12 @@ int get_time_type(string time){
 
 double get_seconds(string time_str){
     //13:50:00.245‚±‚ê‚ğ•b‚É‚È‚¨‚·‚Æ‚·‚é
-    vector<string> hhmmss;
-    string tempo;
-    for(int i = 0; i < time_str.length(); i++){
-        if(time_str[i] == '.'){
-            hhmmss.push_back(tempo);
-            tempo = "";
-        }else if(time_str[i] == ':'){
-            hhmmss.push_back(tempo);
-            tempo = "";
-        }else{
-            tempo += time_str[i];
-        }
-    }
-    hhmmss.push_back(tempo);
+    vector<double> hhmmss = parse_time(time_str);
 
-    int h = stoi(hhmmss[0]);
-    int m = stoi(hhmmss[1]);
-    int s = stoi(hhmmss[2]);
-    int ms = stoi(hhmmss[3]);
-
+    int h = hhmmss[0];
+    int m = hhmmss[1];
+    int s = hhmmss[2];
+    int ms = hhmmss[3];
 
     double hhmmssToSecond = 3600 * h + 60 * m + s + (ms / 1000.0);
     return hhmmssToSecond;
