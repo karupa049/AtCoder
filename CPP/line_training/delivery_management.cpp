@@ -83,10 +83,10 @@ struct Request{
 struct Person{
     PersonState state;
     int busy_time;
-    int delivering_request_index = -1;
+    Request current_task;
 };
 
-int to_minuts(string time_str){
+int to_minutes(string time_str){
     vector<string> hhmm;
     string tempo;
     for(int i = 0; i < time_str.size(); i++){
@@ -104,9 +104,18 @@ int to_minuts(string time_str){
     return h * 60 + m;
 }
 
+string to_str(int minutes){
+    int h = minutes / 60;
+    int m = minutes % 60;
+    char buf[10];
+    sprintf(buf, "%02d:%02d", h, m);
+    return string(buf);
+}
+
 
 
 int main(){
+    freopen("input_delivery_management.txt", "r", stdin);
     vector<Request> all_request;
     int d, dur;
     string t, type, id;
@@ -120,7 +129,6 @@ int main(){
         r.duration = dur;
         r.state = WAITING;
         all_request.push_back(r);
-        cout << "読み込んだぞ: " << id << endl; // これが出るか確認
     }
 
     Person staff;
@@ -128,17 +136,50 @@ int main(){
     staff.state = WAITING_FOR_TASK;
     staff.busy_time = -1;
 
-    vector<Request> request;
-
+    queue<Request> normal_q;
+    queue<Request> express_q;
     for(int now = 0; now < 1440; now++){
         //配達が完了した　＝＝　配達員は配達中であり、busy_time何時前忙しいフラグに達したとき
         if(staff.state == BUSY and staff.busy_time == now){
             staff.state = WAITING_FOR_TASK;
-            cout << request[staff.delivering_request_index].date << " " << request[staff.delivering_request_index].time_str << " " << request[staff.delivering_request_index].id << " has been deliverd" << endl;
+            cout << staff.current_task.date << " " << to_str(now) << " " << staff.current_task.id << " has been deliverd" << endl;
         }
         
         for(int i = 0; i < all_request.size(); i++){
+            if(now == to_minutes(all_request[i].time_str)){
+                if(all_request[i].duration <= 120){
+                    cout << all_request[i].date << " " << all_request[i].time_str << " " << all_request[i].id << " has been accepted." << endl;
+                    if(all_request[i].type == "EXPRESS"){
+                        express_q.push(all_request[i]);
+                    }else{
+                        normal_q.push(all_request[i]);
+                    }
+                }else{
+                    cout << all_request[i].date << " ERROR: Delivery time cannot exceed 120 minutes." << endl;
+                }
+            }
+        }
 
+        if(staff.state == WAITING_FOR_TASK){
+            if(!express_q.empty()){
+                Request target = express_q.front();
+                express_q.pop();
+
+                staff.state = BUSY;
+                staff.busy_time = now + target.duration;
+                staff.current_task = target;
+
+                cout << target.date << " " << to_str(now) << " " << target.id << " has been assigned." << endl;
+            }else if(!normal_q.empty()){
+                Request target = normal_q.front();
+                normal_q.pop();
+
+                staff.state = BUSY;
+                staff.busy_time = now + target.duration;
+                staff.current_task = target;
+ 
+                cout << target.date << " " << target.time_str << " " << target.id << " has been assigned." << endl;
+            }
         }
 
     }
