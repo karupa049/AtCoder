@@ -105,6 +105,7 @@ int main(){
     double dist;
     double total_dist = 0;
     double total_low_speed_sec = 0;
+    double next_charge_dist = 1400.0;
     string prev_time_str;
     string curr_time_str;
 
@@ -131,11 +132,26 @@ int main(){
             //type‚É‚æ‚èA”{—¦•Ï‚í‚é
             total_low_speed_sec += time_diff;
             if(total_low_speed_sec >= 45){
-                total_fare += 40;
+                total_fare += get_increment_fare(curr_time_str);
                 total_low_speed_sec -= 45;
             }
         }
+
+        total_dist += dist;
+        while(total_dist >= next_charge_dist){
+            int fare = get_increment_fare(curr_time_str);
+            total_fare += fare;
+
+            if(next_charge_dist < 10000.0){
+                next_charge_dist += 400.0;
+            }else{
+                next_charge_dist += 350.0;
+            }
+        }
+        prev_time_str = curr_time_str;
     }
+
+    cout << total_fare << endl;
 
 
 
