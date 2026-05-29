@@ -5,7 +5,7 @@
 [Chemistry Puzzles](https://cho.is.meisei-u.ac.jp/cho/team2025/Chemistry-Puzzles/)
 
 ## プレゼンテーション資料
-**▼ スライドをブラウザで見る（おすすめ）**
+**▼ スライドをブラウザで見る**
 [プレゼン資料](./提出用.pdf)
 
 ## メンバー・開発体制
