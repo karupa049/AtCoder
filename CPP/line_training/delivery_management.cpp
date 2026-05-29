@@ -77,7 +77,6 @@ struct Request{
     int duration;
 
     State state;
-    int finish_time = -1;
 };
 
 struct Person{
