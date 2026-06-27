@@ -13,40 +13,34 @@ int main(){
     }
 
     sort(change.begin() + 1, change.end(), [](const vector<int>& a, const vector<int>& b) {
-        return a[2] < b[2];
+        return a[2] < b[2]; // 2列目（インデックス2）の要素を比較して小さい順（昇順）に並び替える
     });
 
-    // cout << "--------------------------------------------" << endl;
-    // for(int i = 1; i <= n; i++){
-    //     for(int j = 1; j <= 3; j++){
-    //         cout << change[i][j] << " ";
-    //     }
-    //     cout << endl;
-    // }
+    cout << "--------------------------------------------" << endl;
+    for(int i = 1; i <= n; i++){
+        for(int j = 1; j <= 3; j++){
+            cout << change[i][j] << " ";
+        }
+        cout << endl;
+    }
 
 
     vector<bool> used(m + 1);
     int count = 0;
-    for(int i = 1; i <= m; i++){
-        count = 0;
-        fill(used.begin(), used.end(), false);
+    for(int i = 1; i <= m + 1; i++){
         for(int j = 1; j <= n; j++){
-            if(i < change[j][2]){
-                used[change[j][1]] = true;
+            if(i < change[i][2]){
+                used[change[i][1]] = true;
             }else{
-                used[change[j][3]] = true;
+                used[change[i][3]] = true;
             }
         }
-
-        // for(int k = 1; k <= m; k++){
-        //     cout << used[k] << " ";
-        // }cout << endl;
 
         for(int j = 1; j <= m; j++){
             if(used[j] == true){
                 count++;
             }
+            cout << count << endl;
         }
-        cout << count << endl;
     }
 }
